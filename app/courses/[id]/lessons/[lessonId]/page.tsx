@@ -454,7 +454,7 @@ export default function LessonsPage() {
 
                 <div className="divide-y divide-border max-h-96 overflow-y-auto">
 
-                  {lessons.map((lesson) => (
+                  {lessons.map((lesson, index) => (
                     <Link
                       key={lesson.id}
                       href={`/courses/${course_id}/lessons/${lesson.id}`}
@@ -490,7 +490,7 @@ export default function LessonsPage() {
                                 : 'text-foreground/70'
                               }`}
                           >
-                            {lesson.title}
+                            {index + 1}. {lesson.title}
                           </p>
 
                           {lesson.duration_minutes && (
