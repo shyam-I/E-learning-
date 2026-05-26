@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 
@@ -25,71 +25,116 @@ interface Category {
   name: string
 }
 
-export default function CoursesPage() {
+function CoursesContent() {
+
   const searchParams = useSearchParams()
 
-  const initialSearch = searchParams.get('search') || ''
+  const initialSearch =
+    searchParams.get('search') || ''
 
-  const [courses, setCourses] = useState<Course[]>([])
-  const [categories, setCategories] = useState<Category[]>([])
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [searchQuery, setSearchQuery] = useState(initialSearch)
-  const [loading, setLoading] = useState(true)
+  const [courses, setCourses] =
+    useState<Course[]>([])
+
+  const [categories, setCategories] =
+    useState<Category[]>([])
+
+  const [selectedCategory, setSelectedCategory] =
+    useState<string | null>(null)
+
+  const [searchQuery, setSearchQuery] =
+    useState(initialSearch)
+
+  const [loading, setLoading] =
+    useState(true)
 
   useEffect(() => {
+
     const fetchData = async () => {
+
       try {
+
         // Fetch categories
-        const categoriesRes = await fetch('/api/categories')
-        const categoriesJson = await categoriesRes.json()
+        const categoriesRes =
+          await fetch('/api/categories')
 
-        console.log('Categories API:', categoriesJson)
+        const categoriesJson =
+          await categoriesRes.json()
 
-        const categoriesData = Array.isArray(categoriesJson)
-          ? categoriesJson
-          : categoriesJson.data || []
+        const categoriesData =
+          Array.isArray(categoriesJson)
+            ? categoriesJson
+            : categoriesJson.data || []
 
         setCategories(categoriesData)
 
         // Fetch courses
-        const coursesRes = await fetch('/api/courses')
-        const coursesJson = await coursesRes.json()
+        const coursesRes =
+          await fetch('/api/courses')
 
-        console.log('Courses API:', coursesJson)
+        const coursesJson =
+          await coursesRes.json()
 
-        const coursesData = Array.isArray(coursesJson)
-          ? coursesJson
-          : coursesJson.data || []
+        const coursesData =
+          Array.isArray(coursesJson)
+            ? coursesJson
+            : coursesJson.data || []
 
         setCourses(coursesData)
 
       } catch (error) {
-        console.error('Error fetching data:', error)
+
+        console.error(
+          'Error fetching data:',
+          error
+        )
+
       } finally {
+
         setLoading(false)
+
       }
     }
 
     fetchData()
+
   }, [])
 
   // Filter courses
-  const filteredCourses = courses.filter((course) => {
-    const title = course.title || ''
-    const description = course.description || ''
+  const filteredCourses =
+    courses.filter((course) => {
 
-    const matchesSearch =
-      title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      description.toLowerCase().includes(searchQuery.toLowerCase())
+      const title =
+        course.title || ''
 
-    const matchesCategory =
-      !selectedCategory ||
-      course.category_id === selectedCategory
+      const description =
+        course.description || ''
 
-    return matchesSearch && matchesCategory
-  })
+      const matchesSearch =
+        title
+          .toLowerCase()
+          .includes(
+            searchQuery.toLowerCase()
+          ) ||
+
+        description
+          .toLowerCase()
+          .includes(
+            searchQuery.toLowerCase()
+          )
+
+      const matchesCategory =
+        !selectedCategory ||
+        course.category_id ===
+          selectedCategory
+
+      return (
+        matchesSearch &&
+        matchesCategory
+      )
+    })
 
   return (
+
     <div className="min-h-screen bg-background py-12">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -118,7 +163,11 @@ export default function CoursesPage() {
             <Input
               placeholder="Search courses..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) =>
+                setSearchQuery(
+                  e.target.value
+                )
+              }
               className="pl-10"
             />
 
@@ -128,8 +177,14 @@ export default function CoursesPage() {
           <div className="flex gap-2 flex-wrap">
 
             <Button
-              variant={selectedCategory === null ? 'default' : 'outline'}
-              onClick={() => setSelectedCategory(null)}
+              variant={
+                selectedCategory === null
+                  ? 'default'
+                  : 'outline'
+              }
+              onClick={() =>
+                setSelectedCategory(null)
+              }
               className="rounded-full"
             >
               All
@@ -140,11 +195,16 @@ export default function CoursesPage() {
               <Button
                 key={category.id}
                 variant={
-                  selectedCategory === category.id
+                  selectedCategory ===
+                  category.id
                     ? 'default'
                     : 'outline'
                 }
-                onClick={() => setSelectedCategory(category.id)}
+                onClick={() =>
+                  setSelectedCategory(
+                    category.id
+                  )
+                }
                 className="rounded-full"
               >
                 {category.name}
@@ -153,23 +213,28 @@ export default function CoursesPage() {
             ))}
 
           </div>
+
         </div>
 
         {/* Loading */}
         {loading ? (
 
           <div className="flex items-center justify-center py-20">
+
             <p className="text-foreground/60 text-lg">
               Loading courses...
             </p>
+
           </div>
 
         ) : filteredCourses.length === 0 ? (
 
           <div className="flex items-center justify-center py-20">
+
             <p className="text-foreground/60 text-lg">
               No courses found.
             </p>
+
           </div>
 
         ) : (
@@ -274,5 +339,18 @@ export default function CoursesPage() {
       </div>
 
     </div>
+  )
+}
+
+export default function CoursesPage() {
+
+  return (
+
+    <Suspense fallback={<div>Loading...</div>}>
+
+      <CoursesContent />
+
+    </Suspense>
+
   )
 }
