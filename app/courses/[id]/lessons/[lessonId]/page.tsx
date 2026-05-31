@@ -28,13 +28,13 @@ interface Course {
   id: string
   title: string
   description: string
-  
+
 }
 
 
 export default function LessonsPage() {
   const { id: course_id } = useParams()
-
+  const params = useParams()
   const [course, setCourse] = useState<Course | null>(null)
 
   const [lessons, setLessons] = useState<Lesson[]>([])
@@ -244,57 +244,56 @@ export default function LessonsPage() {
           {/* Main Content */}
           <div className="lg:col-span-3 space-y-6">
 
-           {/* Video Player */}
-<div className="w-full aspect-video rounded-lg overflow-hidden border border-border bg-black">
+            {/* Video Player */}
+            <div className="w-full aspect-video rounded-lg overflow-hidden border border-border bg-black">
 
-  {currentLesson?.video_url ? (
+              {currentLesson?.video_url ? (
 
-    currentLesson.video_url.includes('youtube.com') ||
-    currentLesson.video_url.includes('youtu.be') ? (
+                currentLesson.video_url.includes('youtube.com') ||
+                  currentLesson.video_url.includes('youtu.be') ? (
 
-      <iframe
-        className="w-full h-full"
-        src={`https://www.youtube.com/embed/${
-          currentLesson.video_url.includes('youtu.be/')
-            ? currentLesson.video_url
-                .split('youtu.be/')[1]
-                .split('?')[0]
-            : new URL(
-                currentLesson.video_url
-              ).searchParams.get('v')
-        }`}
-        title={currentLesson.title}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      />
+                  <iframe
+                    className="w-full h-full"
+                    src={`https://www.youtube.com/embed/${currentLesson.video_url.includes('youtu.be/')
+                      ? currentLesson.video_url
+                        .split('youtu.be/')[1]
+                        .split('?')[0]
+                      : new URL(
+                        currentLesson.video_url
+                      ).searchParams.get('v')
+                      }`}
+                    title={currentLesson.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
 
-    ) : (
+                ) : (
 
-      <video
-        controls
-        className="w-full h-full"
-      >
+                  <video
+                    controls
+                    className="w-full h-full"
+                  >
 
-        <source
-          src={currentLesson.video_url}
-          type="video/mp4"
-        />
+                    <source
+                      src={currentLesson.video_url}
+                      type="video/mp4"
+                    />
 
-      </video>
+                  </video>
 
-    )
+                )
 
-  ) : (
+              ) : (
 
-    <div className="w-full h-full flex items-center justify-center text-white">
+                <div className="w-full h-full flex items-center justify-center text-white">
 
-      No video available
+                  No video available
 
-    </div>
+                </div>
 
-  )}
+              )}
 
-</div>
+            </div>
 
             {/* Lesson Content */}
             <div className="bg-white border border-border rounded-lg p-8 space-y-4">
@@ -396,6 +395,25 @@ export default function LessonsPage() {
                 <ChevronRight className="w-5 h-5 ml-2" />
               </Button>
 
+              {/* Assessment Button */}
+              {progress === 100 && (
+
+                <Link
+                  href={`/courses/${params.id}/assessment`}
+                >
+
+                  <Button
+                    variant="outline"
+                    className="w-26 h-9 ml-0"
+                  >
+
+                    Take Assessment
+
+                  </Button>
+
+                </Link>
+
+              )}
             </div>
 
           </div>
@@ -459,8 +477,8 @@ export default function LessonsPage() {
                       key={lesson.id}
                       href={`/courses/${course_id}/lessons/${lesson.id}`}
                       className={`block w-full p-4 text-left transition-colors ${currentLesson?.id === lesson.id
-                          ? 'bg-primary/10 border-l-2 border-primary'
-                          : 'hover:bg-muted'
+                        ? 'bg-primary/10 border-l-2 border-primary'
+                        : 'hover:bg-muted'
                         }`}
                     >
 
@@ -486,8 +504,8 @@ export default function LessonsPage() {
 
                           <p
                             className={`text-sm font-medium truncate ${currentLesson?.id === lesson.id
-                                ? 'text-foreground'
-                                : 'text-foreground/70'
+                              ? 'text-foreground'
+                              : 'text-foreground/70'
                               }`}
                           >
                             {index + 1}. {lesson.title}

@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input'
 import { Search, Clock, Star } from 'lucide-react'
 
 interface Course {
+  image_url: string
   id: string
   title: string
   description: string
@@ -249,23 +250,22 @@ function CoursesContent() {
               >
 
                 <div className="bg-white border border-border rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 h-full">
+<div className="h-52 overflow-hidden">
 
-                  {/* Thumbnail */}
-                  <div className="h-52 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+  <img
+    src={
+      course.image_url ||
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200"
+    }
+    alt={course.title}
+    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+  />
 
-                    <div className="text-center">
+</div>
 
-                      <div className="text-5xl mb-3">
-                        📚
-                      </div>
-
-                      <p className="text-sm text-foreground/60 px-4">
-                        {course.title}
-                      </p>
-
-                    </div>
-
-                  </div>
+<p className="text-xs break-all">
+  {course.image_url}
+</p> 
 
                   {/* Content */}
                   <div className="p-6 space-y-4">
