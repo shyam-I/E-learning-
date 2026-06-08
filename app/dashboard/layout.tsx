@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Home, BookOpen, User, LogOut } from 'lucide-react'
-
+import Image from 'next/image'
 export const metadata = {
   title: 'Dashboard - KnowledgeHub',
 }
@@ -26,12 +26,25 @@ export default async function DashboardLayout({
         {/* Sidebar */}
         <aside className="md:col-span-1 bg-white border-r border-border p-6 space-y-8">
           {/* Logo */}
-          <Link href="/dashboard" className="flex items-center gap-2 font-bold text-lg">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">LH</span>
-            </div>
-            <span>KnowledgeHub</span>
-          </Link>
+<Link
+  href="/dashboard"
+  className="flex items-center gap-3"
+>
+
+  <Image
+    src="/main logo.jpeg"
+    alt="KnowledgeHub Logo"
+    width={45}
+    height={45}
+    className="rounded-xl object-cover"
+    priority
+  />
+
+  <span className="font-bold text-xl">
+    KnowledgeHub
+  </span>
+
+</Link>
 
           {/* Navigation */}
           <nav className="space-y-2">

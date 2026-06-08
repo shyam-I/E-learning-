@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, BookOpen, Users, Award } from 'lucide-react'
-
+import Image from 'next/image'
 export default function Home() {
   return (
     <main>
@@ -11,7 +11,7 @@ export default function Home() {
           <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
         </div>
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10 grid md:grid-cols-2 gap-12 items-center">
           {/* Left content */}
           <div className="space-y-8">
@@ -59,14 +59,19 @@ export default function Home() {
 
           {/* Right visual */}
           <div className="hidden md:flex justify-center items-center">
-            <div className="relative w-full h-[500px] bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl border border-border overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center space-y-4">
-                  <BookOpen className="w-20 h-20 text-primary mx-auto" />
-                  <p className="text-foreground/60 font-medium">Learn from experts</p>
-                </div>
-              </div>
+
+            <div className="relative w-full h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+
+              <Image
+                src="\logo.png"
+                alt="E-Learning Banner"
+                fill
+                priority
+                className="object-cover hover:scale-105 transition duration-500"
+              />
+
             </div>
+
           </div>
         </div>
       </section>
