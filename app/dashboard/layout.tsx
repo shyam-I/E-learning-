@@ -41,7 +41,7 @@ export default async function DashboardLayout({
   />
 
   <span className="font-bold text-xl">
-    KnowledgeHub
+    KnowledgeHub  
   </span>
 
 </Link>

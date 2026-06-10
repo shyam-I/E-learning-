@@ -7,27 +7,14 @@ import './globals.css'
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: 'KnowledgeHub - Online Learning Platform',
-  description: 'Discover, learn, and grow with our comprehensive online courses. From beginner to advanced, find courses tailored to your goals.',
-  generator: 'KnowlegeHub',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/main logo.jpeg',
-  },
+  description:
+    'Discover, learn, and grow with our comprehensive online courses. From beginner to advanced, find courses tailored to your goals.',
+
+  generator: 'KnowledgeHub',
+
+  
 }
 
 export default function RootLayout({
