@@ -10,7 +10,7 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: 'KnowledgeHub - Online Learning Platform',
   description: 'Discover, learn, and grow with our comprehensive online courses. From beginner to advanced, find courses tailored to your goals.',
-  generator: 'v0.app',
+  generator: 'KnowlegeHub',
   icons: {
     icon: [
       {
